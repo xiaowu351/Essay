@@ -1,0 +1,32 @@
+注意，以下"[]" 只是为了区分git命令和操作名称,实际使用中不需要使用"[]"。
+git 分为三个区：工作区-->暂层区-->本地仓库区
+
+1.1 git clone [url]  # 克隆指定url的代码库
+
+1.2 git status # 查看本地库的状态
+
+1.3 git branch [分支名] # 创建分支
+
+1.4 git branch -d [分支名] # 删除分支
+
+1.5 git checkout [分支名] # 切换分支
+
+1.6 git checkout -b [分支名] # 新建并切换分支
+
+1.7 git add [文件名] # 提交指定文件名到暂层区
+
+1.8 git commit -m [描述信息] # 提交暂层区中文件到本地代码库中
+
+1.9 git push origin [本地分支名]:[git仓库分支名] 
+
+1.10 merge [分支名] # 合并分支
+
+1.11 git pull origin [git仓库分支名]  # 拉去git仓库中代码库
+
+1.12 提交之前记得先获取git仓库分支中最新代码，git pull origin [git仓库分支名] 从而避免push代码时发生了代码冲突。
+
+1.13 git tag -a [tag名称] -m [tag说明]  #  创建git tag 版本号
+
+1.14 git tag # 可以查看当前存在哪些版本号
+
+1.15 git push origin [本地分支名]:[git仓库分支名] tags
