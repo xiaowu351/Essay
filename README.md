@@ -1,3 +1,3 @@
-＃随笔笔记
+＃Essay Record
 
-Git Command Description
+Essay Record
