@@ -1,0 +1,8 @@
+出现The underlying connection was closed: The connection was closed（基础连接已经关闭: 连接被意外关闭）异常时，一般由以下几种情况引起：
+1、DataTable返回值出现错误；-- 需要给DataTable的TableName赋值；
+
+2、实体类中含有枚举类型导致的错误；-- 枚举类型得有默认值；
+
+3、调用者（Client）端时钟与wcf服务（Server）端时钟不同步；  -- Client-Server时钟必须同步；
+
+4、wcf 接口返回Stream类型时，调用者（Client）不能设置代理； -- Client端取消代理设置；
