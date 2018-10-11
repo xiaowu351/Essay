@@ -1,0 +1,22 @@
+
+IdentityServer4 实现了OpenID Connect 和OAuth2.0协议。 
+IdentityServer4是为ASP.NET CORE量身定制的实现了OpenId Connect和OAuth2.0协议的认证授权中间件。
+
+1、认证即服务；
+2、单点登录/注销；
+3、API的访问控制；
+
+
+OAuth2.0定义了四种授权模式：
+① Client Credentials：客户端凭证模式；该模式通常用于服务器之间的通讯；该模式仅发生在client与IdentityServer之间；
+② Resource Owner Password Credentials：密码模式；
+③ Authorization Code：授权码模式；该模式是一种混合模式，是目前功能最完整、流程最严密的授权模式。它主要分为两大步骤：认证和授权；
+	其流程为：
+			1. 用户访问客户端，客户端将用户导向Identity Server；
+			2. 用户填写凭证信息并向客户端授权，认证服务器根据客户端指定的重定向URI，并返回一个【Authorization Code】 给客户端；
+			3. 客户端根据【Authorization Code】向Identity Server申请【Access Token】；此过程用户不可见；
+④ Implicit：简化模式；直接通过浏览器的链接跳转申请令牌；
+
+
+
+
