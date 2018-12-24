@@ -1,0 +1,80 @@
+特点：
+1、节约时间、快速部署和启动；
+2、节约成本；
+用途：
+1、标准化应用发布；
+2、方便做持续集成；
+3、做为集群中的轻量级主机或者节点；
+4、方便构建基于SOA或者微服务架构的系统；
+
+学习内容：
+*****************************************************************
+镜像、容器、与仓库；
+
+docker run 
+		-p 8001:80 //端口映射
+		-d  	   //detach 后台运行
+		-name      //指定名称  "容器名称 镜像名称"
+	
+***************************************************
+1、mysql Docker 安装与配置
+
+docker run  -p 3306:3306 
+-e MYSQL_ROOT_PASSWORD="123456"  # 设置root的初始密码
+-e MYSQL_USER="zpw"              # 给定mysql用户名
+-e MYSQL_PASSWORD="123456"       # 给定mysql用户名的密码
+--name mysql01   				 # 容器的名称
+--character-set-server=utf8        # 设置全局字符集配置
+--collation-server=utf8_general_ci # 设置全局字符集配置
+-d mysql/mysql-server              #使用的镜像名称
+
+2、mysql 数据库用户权限配置
+mysql> CREATE USER 'test'@'localhost' IDENTIFIED BY 'pwd123456'  # 创建用户
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'test'@'localhost' WITH GRANT OPTION; #给用户授权
+mysql> CREATE USER 'test'@'%' IDENTIFIED BY 'pwd123456'; #创建用户
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'test'@'%' WITH GRANT OPTION;# 给用户授权，并配置%链接权限；即：允许远程链接；
+
+3、mysql持久化数据和配置更改(只支持linux)
+# 参考官方文档https://dev.mysql.com/doc/refman/8.0/en/docker-mysql-more-topics.html
+docker run -d -p 3307:3306 --name=mysql02 \    # 
+-e MYSQL_ROOT_PASSWORD="123456" \              # 设置root的初始密码
+--mount type=bind,src=/etc/mysql/my.cnf,dst=/etc/my.cnf \    #映射文件:在/etc/mysql/my.cnf下的文件必须存在，且内容为[mysqld]user=mysql
+--mount type=bind,src=/etc/mysql/data,dst=/var/lib/mysql \   #映射文件:/etc/mysql/data 文件夹必须存在
+-d mysql/mysql-server:tag
+
+
+4、mysql配置更改
+在/etc/mysql/my.cnf 文件中设置如下内容：
+[mysqld]
+  user=mysql
+  character-set-server=utf8
+  [client]
+  default-character-set=utf8
+  [mysql]
+  default-character-set=utf8
+  
+重启MySQL服务后，mysql的字符集就改成了utf8.
+*******************************************************************************
+Docker Build
+1、Dockerfile文件定义Docker生成内容：
+
+FROM microsoft/dotnet  #使用现有镜像
+ WORKDIR /app   	   #指定工作目录，若不存在，则创建一个
+  COPY . /app          # "."表示传递过来的当前目录，复制文件至/app目录下
+   CMD [ "dotnet","run" ]   # 执行指定的cmd 命令
+
+2、Dockerfile文件中定义多个FROM
+
+FROM microsoft/dotnet:sdk as build-env #定义一个中间过程
+WORKDIR /code
+
+COPY *.csproj /code
+RUN dotnet restore
+
+COPY . /code
+RUN dotnet publish -c Release -o out   #直接指定dotnet 的cli命令
+
+FROM microsoft/dotnet:runtime
+WORKDIR /app						   # 若copy目标的目录名称不存在，则此处一定要指定；
+COPY --from=build-env /code/out /app   #从中间过程生成的目录中copy文件至指定目录；
+ENTRYPOINT [ "dotnet","console2.dll" ]
