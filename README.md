@@ -1,3 +1,3 @@
-＃Essay Record
+# Essay Record
 
 Essay Record
