@@ -29,7 +29,7 @@ Ocelot是一个用 .Net Core实现并且开源的API网关，它功能强大，�
 ![](http://ocelot.readthedocs.io/en/latest/_images/OcelotMultipleInstancesConsul.jpg)
 
 ### 集成网关
-在asp.net core 2.0里通过nuget即可完成集成，或者命令行dotnet add package Ocelot以及通过vs2017 UI添加Ocelot nuget引用都可以。
+在asp .net core 2.0里通过nuget即可完成集成，或者命令行dotnet add package Ocelot以及通过vs2017 UI添加Ocelot nuget引用都可以。
 
 ```Install-Package Ocelot```
 
@@ -367,7 +367,7 @@ Ocelot可以对下游请求结果进行缓存 ，目前缓存的功能还不是�
 Region是对缓存进行的一个分区，我们可以调用Ocelot的 administration API来移除某个区下面的缓存 
 
 ### 认证
-如果我们需要对下游API进行认证以及鉴权服务的，则首先Ocelot 网关这里需要添加认证服务。这和我们给一个单独的API或者ASP.NET Core Mvc添加认证服务没有什么区别。
+如果我们需要对下游API进行认证以及鉴权服务的，则首先Ocelot 网关这里需要添加认证服务。这和我们给一个单独的API或者ASP .NET Core Mvc添加认证服务没有什么区别。
 ```
 public void ConfigureServices(IServiceCollection services)
 {
@@ -464,7 +464,7 @@ public void ConfigureServices(IServiceCollection services)
 ####  变量
 在请求头转化这里Ocelot为我们提供了两个变量：BaseUrl和DownstreamBaseUrl。BaseUrl就是我们在GlobalConfiguration里面配置的BaseUrl，后者是下游服务的Url。这里用301跳转做一个示例如何使用这两个变量。
 
-默认的301跳转，我们会返回一个Location的头，于是我们希望将http://www.bbc.co.uk 替换为 http://ocelot.com，后者者网关对外的域名。
+默认的301跳转，我们会返回一个Location的头，于是我们希望将http://www.bbc.co.uk 替换为        `http://ocelot.com`，后者者网关对外的域名。
 ```
 "DownstreamHeaderTransform": {
     "Location": "http://www.bbc.co.uk/, http://ocelot.com/"
